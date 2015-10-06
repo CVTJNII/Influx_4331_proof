@@ -5,10 +5,6 @@ MAINTAINER Tom Noonan II (thomas.noonan@corvisa.com)
 
 RUN apt-get update && apt-get install -y wget
 
-# Add user with specified UID/GID, see README
-# https://github.com/influxdb/influxdb/blob/1daf665a1d5deb00d383e799274d98deb2449505/package.sh#L289
-RUN groupadd -g 904 influxdb && useradd -u 904 -g 904 -M influxdb
-
 #RUN cd /tmp && wget http://influxdb.s3.amazonaws.com/influxdb_0.9.4.1_amd64.deb && dpkg -i influxdb_0.9.4.1_amd64.deb
 # Run nightly to get latest bugfixes missing from stable
 RUN cd /tmp && wget https://s3.amazonaws.com/influxdb/influxdb_nightly_amd64.deb && dpkg -i influxdb_nightly_amd64.deb
