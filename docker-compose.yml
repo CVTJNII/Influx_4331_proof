@@ -1,0 +1,78 @@
+#
+# InfluxDB cluster test
+#
+
+# The links are for poor-mans start ordering, but are not used for traffic
+# As all nodes need to be able to communicate with all other nodes the exposed ports are used.
+
+influxdb1:
+  build: ./influxdb
+  ports:
+    - 8188:8088
+    - 8183:8083
+    - 8186:8086
+  environment:
+    - INFLUXD_HOSTNAME=172.17.42.1:8188
+
+influxdb2:
+  build: ./influxdb
+  ports:
+    - 8288:8088
+    - 8283:8083
+    - 8286:8086
+  environment:
+    - INFLUXD_HOSTNAME=172.17.42.1:8288
+    - INFLUXD_OPTS=-join=172.17.42.1:8188
+  links:
+    - influxdb1:influxdb1
+
+influxdb3:
+  build: ./influxdb
+  ports:
+    - 8388:8088
+    - 8383:8083
+    - 8386:8086
+  environment:
+    - INFLUXD_HOSTNAME=172.17.42.1:8388
+    - INFLUXD_OPTS=-join=172.17.42.1:8188,172.17.42.1:8288
+  links:
+    - influxdb1:influxdb1
+    - influxdb2:influxdb2
+
+influxdb4:
+  build: ./influxdb
+  ports:
+    - 8488:8088
+    - 8483:8083
+    - 8486:8086
+  environment:
+    - INFLUXD_HOSTNAME=172.17.42.1:8488
+    - INFLUXD_OPTS=-join=172.17.42.1:8188,172.17.42.1:8288
+  links:
+    - influxdb1:influxdb1
+    - influxdb2:influxdb2
+
+influxdb5:
+  build: ./influxdb
+  ports:
+    - 8588:8088
+    - 8583:8083
+    - 8586:8086
+  environment:
+    - INFLUXD_HOSTNAME=172.17.42.1:8588
+    - INFLUXD_OPTS=-join=172.17.42.1:8188,172.17.42.1:8288
+  links:
+    - influxdb1:influxdb1
+    - influxdb2:influxdb2
+
+initializer:
+  build: ./initializer
+  environment:
+    - INFLUXDB_HOST=influxdb1
+  # Links to all influx containers to ensure it comes up last
+  links:
+    - influxdb1:influxdb1
+    - influxdb2:influxdb2
+    - influxdb3:influxdb3
+    - influxdb4:influxdb4
+    - influxdb5:influxdb5
