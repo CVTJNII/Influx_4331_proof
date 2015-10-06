@@ -10,7 +10,7 @@ Requirements
 
 - Docker
 - Docker Compose
-- docker0 set to default IP of 172.17.42.1
+- docker0 interface set to default IP of 172.17.42.1
 
 Reproducing
 ===========
@@ -981,7 +981,7 @@ Notes
 -----
 
 - This demo uses ports exposed on 172.17.42.1 to allow the cluster nodes to communicate, this IP is baked into the configs.
-- This demo doesn't handle existing configurtation well as it is a simple failure reproduction repo.  Containers must be removed between runs.
+- This demo doesn't handle existing configurtation well as it is a simple failure reproduction repo.  Containers must be removed between runs.  The start and stop scripts handle this.
 
 Author
 ======
