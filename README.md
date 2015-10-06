@@ -977,3 +977,13 @@ Stopping
 ./stop.sh
 ```
 
+Notes
+-----
+
+- This demo uses ports exposed on 172.17.42.1 to allow the cluster nodes to communicate, this IP is baked into the configs.
+- This demo doesn't handle existing configurtation well as it is a simple failure reproduction repo.  Containers must be removed between runs.
+
+Author
+======
+
+Tom Noonan II (thomas.noonan@corvisa.com)
